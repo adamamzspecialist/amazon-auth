@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="pl">
+<meta charset="utf-8">
+<meta name="robots" content="noindex">
+<meta name="referrer" content="no-referrer">
+<title>Autoryzacja zakończona</title>
+<body style="font-family:system-ui,sans-serif;max-width:560px;margin:40px auto;padding:0 16px">
+<h2>Autoryzacja zakończona</h2>
+<p>Przekaż Agentowi poniższe wartości <strong>podczas rozmowy</strong>. Kod jest ważny kilka minut i działa tylko raz.</p>
+<pre id="c" style="font-size:18px;background:#eee;padding:12px;white-space:pre-wrap;word-break:break-all"></pre>
+<script>
+  const p = new URLSearchParams(location.search);
+  const esc = s => (s || '-').replace(/[^A-Za-z0-9._\-|]/g, '');
+  document.getElementById('c').textContent =
+    'code=' + esc(p.get('spapi_oauth_code') || p.get('code')) +
+    '\nstate=' + esc(p.get('state')) +
+    (p.get('selling_partner_id') ? '\nseller=' + esc(p.get('selling_partner_id')) : '');
+  history.replaceState(null, '', location.pathname); // usuń kod z paska adresu i historii
+</script>
+</body>
+</html>
